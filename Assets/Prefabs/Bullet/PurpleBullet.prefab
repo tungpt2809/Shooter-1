@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3508124655242554571}
   - component: {fileID: 3508124655242554568}
+  - component: {fileID: 138909567335322120}
   - component: {fileID: 3508124655242554569}
-  - component: {fileID: 6900673074208120646}
+  - component: {fileID: 5131100806469598663}
   m_Layer: 0
   m_Name: PurpleBullet
   m_TagString: Untagged
@@ -83,6 +84,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &138909567335322120
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508124655242554566}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &3508124655242554569
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -99,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.06
---- !u!114 &6900673074208120646
+--- !u!114 &5131100806469598663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,6 +130,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3508124655242554566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b63722caf234eb4469ca8f440e77dd80, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f4a7005f25c42b40863abffe9d9e447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  damage: 0
