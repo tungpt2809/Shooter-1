@@ -17,6 +17,7 @@ namespace Enemy
 
             _enemies.Add(PoolObjectType.EnemyZombie);
             _enemies.Add(PoolObjectType.EnemySkeleton);
+            Debug.Log(_enemies);
         }
 
         private void Update()
