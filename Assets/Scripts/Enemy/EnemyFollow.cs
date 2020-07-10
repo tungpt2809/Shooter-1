@@ -1,56 +1,53 @@
-﻿using System.Collections.Generic;
+﻿// using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFollow : MonoBehaviour
+namespace Enemy
 {
-    public float speed;
-
-    private Transform _playerPos;
-    private Rigidbody2D _rb;
-    private List<Rigidbody2D> EnemyRbs;
-
-    private float _repelRange = 0.5f;
-
-    void Awake()
+    public class EnemyFollow : MonoBehaviour
     {
-        _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        _rb = GetComponent<Rigidbody2D>();
+        [SerializeField] private float speed = 0f;
 
-        if (EnemyRbs == null)
+        private Transform _playerPos;
+        // private Rigidbody2D _rb;
+        // private readonly List<Rigidbody2D> _enemyRbs = new List<Rigidbody2D>();
+
+        // private const float RepelRange = 0.5f;
+
+        private void Awake()
         {
-            EnemyRbs = new List<Rigidbody2D>();
+            _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+            // _rb = GetComponent<Rigidbody2D>();
+
+            // _enemyRbs.Add(_rb);
         }
 
-        EnemyRbs.Add(_rb);
-    }
+        // private void OnDestroy()
+        // {
+        //     _enemyRbs.Remove(_rb);
+        // }
 
-    private void OnDestroy()
-    {
-        EnemyRbs.Remove(_rb);
-    }
-
-    void Update()
-    {
-        if (Vector2.Distance(transform.position, _playerPos.position) > 0.2f)
+        private void Update()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _playerPos.position, speed * Time.deltaTime);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        Vector2 repelForce = Vector2.zero;
-        foreach (Rigidbody2D enemy in EnemyRbs)
-        {
-            if (enemy == _rb) continue;
-
-            if(Vector2.Distance(enemy.position, _rb.position) <= _repelRange)
+            if (Vector2.Distance(transform.position, _playerPos.position) > 0.2f)
             {
-                Vector2 repelDir = (_rb.position - enemy.position).normalized;
-                repelForce += repelDir;
+                transform.position =
+                    Vector2.MoveTowards(transform.position, _playerPos.position, speed * Time.deltaTime);
             }
-
-
         }
+
+        // private void FixedUpdate()
+        // {
+        //     var repelForce = Vector2.zero;
+        //     foreach (var enemy in _enemyRbs)
+        //     {
+        //         if (enemy == _rb) continue;
+        //
+        //         if (Vector2.Distance(enemy.position, _rb.position) <= RepelRange)
+        //         {
+        //             var repelDir = (_rb.position - enemy.position).normalized;
+        //             repelForce += repelDir;
+        //         }
+        //     }
+        // }
     }
 }

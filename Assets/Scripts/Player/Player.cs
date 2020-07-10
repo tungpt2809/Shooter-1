@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace Player
 {
-    public class Player : MonoBehaviour, IPlayer
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
+    public class Player : MonoBehaviour
     {
         public Weapon.Weapon currentWeapon;
         [SerializeField] private SpriteRenderer currentWeaponSpr = null;
@@ -14,11 +15,10 @@ namespace Player
         [SerializeField] private Animator legAnim = null;
 
         private Camera _main;
-        public float speed { get; private set; }
-        public float heath { get; private set; }
+        private const float Speed = 2f, Heath = 10f;
         private float _currentHeath;
 
-        private float Heath
+        private float CurrentHeath
         {
             get => _currentHeath;
             set
@@ -30,7 +30,7 @@ namespace Player
 
         private Vector2 _moveVelocity;
         private bool _hit = true;
-        private float _nextTimeOfFire = 0f;
+        private float _nextTimeOfFire;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int Hit = Animator.StringToHash("Hit");
 
@@ -40,9 +40,7 @@ namespace Player
             _anim = GetComponent<Animator>();
             _main = Camera.main;
 
-            speed = 2;
-            heath = 10;
-            Heath = heath;
+            CurrentHeath = Heath;
 
             EventDispatcher.Instance.OnPlayerShot.AddListener(PlayerShot);
             EventDispatcher.Instance.OnEnemyHitPlayer.AddListener(UpdateHeath);
@@ -66,12 +64,12 @@ namespace Player
             Movement();
         }
 
-        public void PlayerShot()
+        private void PlayerShot()
         {
             currentWeapon.Shoot(firePoint, ref _nextTimeOfFire);
         }
 
-        public void Rotation()
+        private void Rotation()
         {
             var dir = _main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
@@ -79,10 +77,10 @@ namespace Player
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10 * Time.deltaTime);
         }
 
-        public void Movement()
+        private void Movement()
         {
             var moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            _moveVelocity = moveInput.normalized * speed;
+            _moveVelocity = moveInput.normalized * Speed;
             _myBody.MovePosition(_myBody.position + _moveVelocity * Time.fixedDeltaTime);
             legAnim.SetBool(Moving, _moveVelocity != Vector2.zero);
         }
@@ -103,12 +101,12 @@ namespace Player
             }
         }
 
-        public void UpdateHeath()
+        private void UpdateHeath()
         {
             if (_hit)
             {
                 StartCoroutine(HitBoxOff());
-                Heath--;
+                CurrentHeath--;
             }
         }
 

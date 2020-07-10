@@ -1,30 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+namespace Enemy
 {
-    [SerializeField]
-    private float _health;
-
-    public AudioClip deathClip;
-
-    // Update is called once per frame
-    void Update()
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+    public class EnemyHealth : MonoBehaviour
     {
-        if (_health < 1)
+        [SerializeField] private float health;
+
+        public AudioClip deathClip;
+
+        private void Update()
         {
-            Destroy(gameObject);
-            // SoundManager.instance.playSounceFX(deathClip);
+            if (health < 1)
+            {
+                Destroy(gameObject);
+                // SoundManager.instance.playSounceFX(deathClip);
+            }
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "PurpleBullet")
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            _health = GameObject.FindGameObjectWithTag("Player").GetComponent<Player.Player>().currentWeapon.damage;
-            Destroy(collision);
+            if (!other.CompareTag("PlayerBullet")) return;
+            var bullet = other.GetComponent<Bullet.Bullet>();
+            health -= bullet.damage;
+            bullet.CoolBullet();
         }
     }
 }

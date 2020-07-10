@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using ObjectPooling;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Bullet
 {
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class Bullet : MonoBehaviour
     {
         private PoolObjectType _type = PoolObjectType.None;
-        [HideInInspector] public int _damage = 0;
+        [HideInInspector] public int damage = 0;
 
-        public void InitBullet(PoolObjectType type, int damage)
+        public void InitBullet(PoolObjectType type, int iDamage)
         {
             _type = type;
-            _damage = damage;
+            damage = iDamage;
             Cooling();
         }
 
@@ -23,11 +25,14 @@ namespace Bullet
 
         private IEnumerator Cool()
         {
-            var poolManager = PoolManager.Instance;
-
             yield return new WaitForSeconds(3f);
 
-            poolManager.CoolObject(gameObject, _type);
+            CoolBullet();
+        }
+
+        public void CoolBullet()
+        {
+            PoolManager.Instance.CoolObject(gameObject, _type);
         }
     }
 }
