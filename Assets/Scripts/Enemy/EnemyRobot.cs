@@ -1,61 +1,55 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRobot : MonoBehaviour
+namespace Enemy
 {
-    public Transform gun1, gun2;
-    public GameObject bullet;
-
-    private Transform _playerPos;
-    private Rigidbody2D _rb;
-
-    public float speed = .3f;
-    //private bool isInRange = false;
-
-    void Awake()
+    public class EnemyRobot : MonoBehaviour
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-    //public void Start()
-    //{
-        //StartCoroutine(Shoot());
-    //}
+        [SerializeField] private Weapon.Weapon robotWeapon = null;
+        [SerializeField] private Transform gun1 = null, gun2 = null;
 
-    void Update()
-    {
-        if (Vector2.Distance(transform.position, _playerPos.position) > 2.5f)
+        private Transform _playerPos;
+        private Rigidbody2D _playerRb;
+        private Rigidbody2D _rb;
+        private bool isInRange = false, nextShot = true;
+        private float _nextTimeOfFire1, _nextTimeOfFire2;
+
+        void Awake()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _playerPos.position, speed * Time.deltaTime);
-            //isInRange = false;
+            _rb = GetComponent<Rigidbody2D>();
+            _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+            _playerRb = _playerPos.GetComponent<Rigidbody2D>();
         }
-        //else { isInRange = true; }
+
+        void Update()
+        {
+            isInRange = Vector2.Distance(transform.position, _playerPos.position) <= 2.5f;
+            if (nextShot) StartCoroutine(RobotShoot());
+        }
+
+        private void FixedUpdate()
+        {
+            Rotation();
+        }
+
+        void Rotation()
+        {
+            var direction = (_playerRb.position - _rb.position).normalized;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
+            _rb.rotation = angle;
+        }
+
+        private IEnumerator RobotShoot()
+        {
+            nextShot = false;
+
+            if (isInRange) robotWeapon.Shoot(gun1, ref _nextTimeOfFire1);
+            yield return new WaitForSeconds(0.3f);
+
+            if (isInRange) robotWeapon.Shoot(gun2, ref _nextTimeOfFire2);
+            yield return new WaitForSeconds(0.3f);
+
+            nextShot = true;
+        }
     }
-
-    private void FixedUpdate()
-    {
-        Rotation();
-    }
-
-    void Rotation()
-    {
-        Vector2 direction = (_playerPos.gameObject.GetComponent<Rigidbody2D>().position - _rb.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
-        _rb.rotation = angle;
-    }
-
-    //IEnumerator Shoot()
-    //{
-        //if (isInRange)
-        //    Instantiate(bullet, gun1.position, Quaternion.identity);
-        //yield return new WaitForSeconds(.3f);
-
-        //if (isInRange)
-        //    Instantiate(bullet, gun2.position, Quaternion.identity);
-
-        //yield return new WaitForSeconds(.3f);
-        //StartCoroutine(Shoot());
-    //}
-
 }

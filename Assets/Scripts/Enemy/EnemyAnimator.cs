@@ -7,7 +7,6 @@ namespace Enemy
     {
         private Animator _animator;
         private Vector2 _currentPos, _prevPos;
-        private float _horizontal, _vertical;
         private static readonly int Vertical = Animator.StringToHash("Vertical");
         private static readonly int Horizontal = Animator.StringToHash("Horizontal");
 
@@ -16,10 +15,10 @@ namespace Enemy
         private void Update()
         {
             _currentPos = transform.position;
-            _horizontal = _currentPos.x - _prevPos.x;
-            _vertical = _currentPos.y - _prevPos.y;
-            _animator.SetFloat(Horizontal, _horizontal);
-            _animator.SetFloat(Vertical, _vertical);
+            var deltaPos = (_currentPos - _prevPos);
+            if (deltaPos.sqrMagnitude < 0.01) return;
+            _animator.SetFloat(Horizontal, deltaPos.normalized.x);
+            _animator.SetFloat(Vertical, deltaPos.normalized.y);
             _prevPos = _currentPos;
         }
     }

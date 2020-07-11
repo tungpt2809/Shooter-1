@@ -7,15 +7,15 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
     public class Player : MonoBehaviour
     {
-        public Weapon.Weapon currentWeapon;
+        [SerializeField] private Weapon.Weapon currentWeapon = null;
         [SerializeField] private SpriteRenderer currentWeaponSpr = null;
         [SerializeField] private Transform firePoint = null;
         private Rigidbody2D _myBody;
         private Animator _anim;
         [SerializeField] private Animator legAnim = null;
+        [SerializeField] private float Speed = 0f, Heath = 0f;
 
         private Camera _main;
-        private const float Speed = 2f, Heath = 10f;
         private float _currentHeath;
 
         private float CurrentHeath

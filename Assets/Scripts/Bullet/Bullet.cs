@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using ObjectPooling;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Bullet
 {
@@ -11,10 +10,11 @@ namespace Bullet
         private PoolObjectType _type = PoolObjectType.None;
         [HideInInspector] public int damage = 0;
 
-        public void InitBullet(PoolObjectType type, int iDamage)
+        public void InitBullet(PoolObjectType type, int iDamage, Transform firePoint, float force)
         {
             _type = type;
             damage = iDamage;
+            GetComponent<Rigidbody2D>().AddForce(firePoint.up * -force, ForceMode2D.Impulse);
             Cooling();
         }
 

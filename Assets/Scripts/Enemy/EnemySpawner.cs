@@ -29,6 +29,7 @@ namespace Enemy
             {
                 SpawnAnEnemy();
                 _delayTime = 0f;
+                return;
             }
 
             _delayTime += UnityEngine.Time.deltaTime;

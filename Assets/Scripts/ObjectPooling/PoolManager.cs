@@ -11,6 +11,7 @@ namespace ObjectPooling
         ImprovedBullet,
         WaveBullet,
         ShotgunBullet,
+        RobotBullet,
         EnemyZombie,
         EnemySkeleton,
         EnemyRobot

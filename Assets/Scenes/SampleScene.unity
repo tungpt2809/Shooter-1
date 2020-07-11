@@ -164,6 +164,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc7288cf6a693843ba32f5de3e232d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &513508355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 513508356}
+  m_Layer: 0
+  m_Name: Robot Bullet Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &513508356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513508355}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1931353526}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &518420555
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +222,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1931353526}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -627,7 +657,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1931353526}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403237430
 GameObject:
@@ -710,6 +740,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1556515125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1556515126}
+  m_Layer: 0
+  m_Name: Enemy Robot Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1556515126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556515125}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1931353526}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1776301345
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +824,8 @@ MonoBehaviour:
   currentWeaponSpr: {fileID: 1081432508}
   firePoint: {fileID: 964372899}
   legAnim: {fileID: 1823616266}
+  Speed: 2
+  Heath: 10
 --- !u!50 &1776301348
 Rigidbody2D:
   serializedVersion: 4
@@ -950,8 +1012,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1021780696}
+  - {fileID: 513508356}
   - {fileID: 1237910242}
   - {fileID: 518420556}
+  - {fileID: 1556515126}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -976,13 +1040,25 @@ MonoBehaviour:
     pool: []
   - type: 5
     amount: 10
+    prefab: {fileID: 8881024316594355607, guid: 514b315cb17bd204da1e2331bac3ac92,
+      type: 3}
+    container: {fileID: 513508355}
+    pool: []
+  - type: 6
+    amount: 10
     prefab: {fileID: 1063199856198718329, guid: cedacdb08a10bc049b15cfeb162bc696,
       type: 3}
     container: {fileID: 1237910241}
     pool: []
-  - type: 6
+  - type: 7
     amount: 10
     prefab: {fileID: 7701129857355732109, guid: 924b8b26b33f77844b7aa601a1eb1c23,
       type: 3}
     container: {fileID: 518420555}
+    pool: []
+  - type: 8
+    amount: 10
+    prefab: {fileID: 7792002420319297304, guid: 124dac5dc111c4d488de2172841c293d,
+      type: 3}
+    container: {fileID: 1556515125}
     pool: []
