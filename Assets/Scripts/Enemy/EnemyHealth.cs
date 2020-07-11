@@ -8,6 +8,7 @@ namespace Enemy
         [SerializeField] private float health;
 
         public AudioClip deathClip;
+        public GameObject healthBar;
 
         private void Update()
         {
@@ -24,6 +25,8 @@ namespace Enemy
             var bullet = other.GetComponent<Bullet.Bullet>();
             health -= bullet.damage;
             bullet.CoolBullet();
+
+            healthBar.transform.localScale = new Vector2(health / 100, healthBar.transform.localScale.y);
         }
     }
 }

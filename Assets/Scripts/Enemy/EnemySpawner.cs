@@ -14,7 +14,8 @@ namespace Enemy
         private readonly List<PoolObjectType> _enemies = new List<PoolObjectType>
         {
             PoolObjectType.EnemyZombie,
-            PoolObjectType.EnemySkeleton
+            PoolObjectType.EnemySkeleton,
+            PoolObjectType.EnemyRobot,
         };
 
         private void Awake()
