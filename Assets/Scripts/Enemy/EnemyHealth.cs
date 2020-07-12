@@ -1,21 +1,38 @@
-﻿using UnityEngine;
+﻿using ObjectPooling;
+using UnityEngine;
 
 namespace Enemy
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class EnemyHealth : MonoBehaviour
     {
-        [SerializeField] private float health;
+        [SerializeField] private float health = 0;
+        [SerializeField] private GameObject healthBar = null;
 
-        public AudioClip deathClip;
-        public GameObject healthBar;
+        private PoolObjectType _type = PoolObjectType.None;
+        private float _currentHeath;
+
+        private float CurrentHeath
+        {
+            get => _currentHeath;
+            set
+            {
+                _currentHeath = value;
+                UpdateHeathBar();
+            }
+        }
+
+        public void InitEnemy(PoolObjectType type)
+        {
+            _type = type;
+            CurrentHeath = health;
+        }
 
         private void Update()
         {
-            if (health < 1)
+            if (CurrentHeath < 1)
             {
-                Destroy(gameObject);
-                // SoundManager.instance.playSounceFX(deathClip);
+                CoolEnemy();
             }
         }
 
@@ -23,10 +40,18 @@ namespace Enemy
         {
             if (!other.CompareTag("PlayerBullet")) return;
             var bullet = other.GetComponent<Bullet.Bullet>();
-            health -= bullet.damage;
+            CurrentHeath -= bullet.damage;
             bullet.CoolBullet();
+        }
 
-            healthBar.transform.localScale = new Vector2(health / 100, healthBar.transform.localScale.y);
+        private void UpdateHeathBar()
+        {
+            healthBar.transform.localScale = new Vector2(CurrentHeath / health, healthBar.transform.localScale.y);
+        }
+
+        private void CoolEnemy()
+        {
+            PoolManager.Instance.CoolObject(gameObject, _type);
         }
     }
 }

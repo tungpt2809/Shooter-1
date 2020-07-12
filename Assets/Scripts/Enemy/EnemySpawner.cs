@@ -45,6 +45,7 @@ namespace Enemy
 
             ob.transform.position = spawnPos;
             ob.gameObject.SetActive(true);
+            ob.GetComponent<EnemyHealth>().InitEnemy(type);
         }
     }
 }

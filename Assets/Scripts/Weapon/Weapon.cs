@@ -28,7 +28,8 @@ namespace Weapon
 
             ob.transform.position = firePoint.position;
             ob.gameObject.SetActive(true);
-            ob.GetComponent<Bullet.Bullet>().InitBullet(type, damage, firePoint, force);
+            ob.GetComponent<Bullet.Bullet>().InitBullet(type, damage);
+            ob.GetComponent<Rigidbody2D>().AddForce(firePoint.up * -force, ForceMode2D.Impulse);
         }
     }
 }

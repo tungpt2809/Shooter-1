@@ -182,8 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  deathClip: {fileID: 0}
-  healthBar: {fileID: 3045178027537588984}
+  healthBar: {fileID: 2637293753103261435}
 --- !u!114 &-7411387758724937939
 MonoBehaviour:
   m_ObjectHideFlags: 0
