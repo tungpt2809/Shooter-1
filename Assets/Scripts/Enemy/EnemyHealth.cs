@@ -1,4 +1,5 @@
 ﻿using ObjectPooling;
+using Observer;
 using UnityEngine;
 
 namespace Enemy
@@ -30,10 +31,7 @@ namespace Enemy
 
         private void Update()
         {
-            if (CurrentHeath < 1)
-            {
-                CoolEnemy();
-            }
+            CoolEnemy();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -51,7 +49,11 @@ namespace Enemy
 
         private void CoolEnemy()
         {
-            PoolManager.Instance.CoolObject(gameObject, _type);
+            if (CurrentHeath < 1)
+            {
+                PoolManager.Instance.CoolObject(gameObject, _type);
+                EventDispatcher.Instance.OnEnemyDeath.Invoke();
+            }
         }
     }
 }

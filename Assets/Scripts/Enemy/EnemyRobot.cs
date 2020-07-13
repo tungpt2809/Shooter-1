@@ -11,7 +11,7 @@ namespace Enemy
         private Transform _playerPos;
         private Rigidbody2D _playerRb;
         private Rigidbody2D _rb;
-        private bool _isInRange = false, _nextShot = true;
+        private bool isInRange = false, nextShot = true;
         private float _nextTimeOfFire1, _nextTimeOfFire2;
 
         void Awake()
@@ -21,10 +21,10 @@ namespace Enemy
             _playerRb = _playerPos.GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        void Update()
         {
-            _isInRange = Vector2.Distance(transform.position, _playerPos.position) <= 2.5f;
-            if (_nextShot) StartCoroutine(RobotShoot());
+            isInRange = Vector2.Distance(transform.position, _playerPos.position) <= 2.5f;
+            if (nextShot) StartCoroutine(RobotShoot());
         }
 
         private void FixedUpdate()
@@ -41,15 +41,15 @@ namespace Enemy
 
         private IEnumerator RobotShoot()
         {
-            _nextShot = false;
+            nextShot = false;
 
-            if (_isInRange) robotWeapon.Shoot(gun1, ref _nextTimeOfFire1);
+            if (isInRange) robotWeapon.Shoot(gun1, ref _nextTimeOfFire1);
             yield return new WaitForSeconds(0.3f);
 
-            if (_isInRange) robotWeapon.Shoot(gun2, ref _nextTimeOfFire2);
+            if (isInRange) robotWeapon.Shoot(gun2, ref _nextTimeOfFire2);
             yield return new WaitForSeconds(0.3f);
 
-            _nextShot = true;
+            nextShot = true;
         }
     }
 }

@@ -41,7 +41,10 @@ namespace Player
             _main = Camera.main;
 
             CurrentHeath = Heath;
+        }
 
+        private void Start()
+        {
             EventDispatcher.Instance.OnPlayerShot.AddListener(PlayerShot);
             EventDispatcher.Instance.OnEnemyHitPlayer.AddListener(UpdateHeath);
         }
@@ -52,7 +55,7 @@ namespace Player
 
             if (Input.GetMouseButtonDown(0))
             {
-                EventDispatcher.Instance.OnPlayerShot.Invoke();
+                EventDispatcher.Instance.OnPlayerShot.Invoke(currentWeapon);
             }
 
             transform.position = new Vector2(Mathf.Clamp(transform.position.x, -5.32f, 5.32f),
@@ -64,9 +67,9 @@ namespace Player
             Movement();
         }
 
-        private void PlayerShot()
+        private void PlayerShot(Weapon.Weapon weapon)
         {
-            currentWeapon.Shoot(firePoint, ref _nextTimeOfFire);
+            weapon.Shoot(firePoint, ref _nextTimeOfFire);
         }
 
         private void Rotation()
@@ -107,6 +110,10 @@ namespace Player
             {
                 StartCoroutine(HitBoxOff());
                 CurrentHeath--;
+                if (CurrentHeath < 1)
+                {
+                    EventDispatcher.Instance.OnPlayerDeath.Invoke();
+                }
             }
         }
 
