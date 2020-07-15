@@ -1,6 +1,9 @@
 ﻿using System.Collections;
+using GamePlay;
+using ObjectPooling;
 using Observer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -13,7 +16,7 @@ namespace Player
         private Rigidbody2D _myBody;
         private Animator _anim;
         [SerializeField] private Animator legAnim = null;
-        [SerializeField] private float Speed = 0f, Heath = 0f;
+        [SerializeField] private float speed = 0f, heath = 0f;
 
         private Camera _main;
         private float _currentHeath;
@@ -40,17 +43,20 @@ namespace Player
             _anim = GetComponent<Animator>();
             _main = Camera.main;
 
-            CurrentHeath = Heath;
+            GamePlayManager.Instance.player = this;
+            CurrentHeath = heath;
         }
 
         private void Start()
         {
             EventDispatcher.Instance.OnPlayerShot.AddListener(PlayerShot);
             EventDispatcher.Instance.OnEnemyHitPlayer.AddListener(UpdateHeath);
+            EventDispatcher.Instance.OnPlayerDeath.AddListener(PlayerDeath);
         }
 
         private void Update()
         {
+            if (CurrentHeath < 1) return;
             Rotation();
 
             if (Input.GetMouseButtonDown(0))
@@ -64,6 +70,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            if (CurrentHeath < 1) return;
             Movement();
         }
 
@@ -83,7 +90,7 @@ namespace Player
         private void Movement()
         {
             var moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            _moveVelocity = moveInput.normalized * Speed;
+            _moveVelocity = moveInput.normalized * speed;
             _myBody.MovePosition(_myBody.position + _moveVelocity * Time.fixedDeltaTime);
             legAnim.SetBool(Moving, _moveVelocity != Vector2.zero);
         }
@@ -119,6 +126,24 @@ namespace Player
 
         private void UpdateHeathBar()
         {
+        }
+
+        private void PlayerDeath()
+        {
+            StartCoroutine(Death());
+        }
+
+        private static IEnumerator Death()
+        {
+            PoolManager.Instance.CoolAllPool();
+            yield return new WaitForSecondsRealtime(2f);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public void ChangeWeapon(Weapon.Weapon weapon)
+        {
+            currentWeapon = weapon;
+            currentWeaponSpr.sprite = weapon.currentWeaponSpr;
         }
     }
 }

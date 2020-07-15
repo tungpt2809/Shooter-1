@@ -1,15 +1,14 @@
 using System.Collections.Generic;
+using GamePlay;
 using ObjectPooling;
-using Player;
 using UnityEngine;
 
 namespace Enemy
 {
     public class EnemySpawner : MonoBehaviour
     {
-        private const float SpawnRadius = 7, Time = 1.5f;
+        private const float SpawnRadius = 7, DeltaDelay = 1.5f;
         private float _delayTime = 0;
-        private Transform _playerPos;
 
         private readonly List<PoolObjectType> _enemies = new List<PoolObjectType>
         {
@@ -18,26 +17,22 @@ namespace Enemy
             PoolObjectType.EnemyRobot,
         };
 
-        private void Awake()
-        {
-            _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-
         private void Update()
         {
-            if (_delayTime > Time)
+            if (_delayTime > DeltaDelay)
             {
                 SpawnAnEnemy();
                 _delayTime = 0f;
                 return;
             }
 
-            _delayTime += UnityEngine.Time.deltaTime;
+            _delayTime += Time.deltaTime;
         }
 
         private void SpawnAnEnemy()
         {
-            Vector2 spawnPos = _playerPos.position;
+            if (!GamePlayManager.Instance.spawn) return;
+            Vector2 spawnPos = GamePlayManager.Instance.player.transform.position;
             spawnPos += Random.insideUnitCircle.normalized * SpawnRadius;
 
             var type = _enemies[Random.Range(0, _enemies.Count)];

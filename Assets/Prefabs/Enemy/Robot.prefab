@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  deathClip: {fileID: 0}
+  scoreReward: 7
   healthBar: {fileID: 8532345127632814909}
 --- !u!114 &7792002420319297300
 MonoBehaviour:

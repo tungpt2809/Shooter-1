@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  scoreReward: 3
   healthBar: {fileID: 8676514192848157369}
 --- !u!114 &1711671881339985297
 MonoBehaviour:

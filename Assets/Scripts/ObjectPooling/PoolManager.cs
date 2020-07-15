@@ -86,5 +86,26 @@ namespace ObjectPooling
         {
             return listOfPool.FirstOrDefault(t => type == t.type);
         }
+
+        public void CoolAllPool()
+        {
+            foreach (var t in listOfPool)
+            {
+                CoolPool(t.type);
+            }
+        }
+
+        private void CoolPool(PoolObjectType type)
+        {
+            var selected = GetPoolByType(type);
+            var container = selected.container.transform;
+
+            for (var i = 0; i < container.childCount; i++)
+            {
+                if (!container.GetChild(i)) return;
+                var ob = container.GetChild(i).gameObject;
+                CoolObject(ob, type);
+            }
+        }
     }
 }

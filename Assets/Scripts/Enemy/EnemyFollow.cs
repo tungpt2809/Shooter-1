@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GamePlay;
+using UnityEngine;
 
 namespace Enemy
 {
@@ -7,17 +8,13 @@ namespace Enemy
         [SerializeField] private float speed = 0f;
         [SerializeField] private float range = 0f;
 
-        private Transform _playerPos;
-
-        private void Awake() =>
-            _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-
         private void Update()
         {
-            if (Vector2.Distance(transform.position, _playerPos.position) > range)
+            if (Vector2.Distance(transform.position, GamePlayManager.Instance.player.transform.position) > range)
             {
                 transform.position =
-                    Vector2.MoveTowards(transform.position, _playerPos.position, speed * Time.deltaTime);
+                    Vector2.MoveTowards(transform.position, GamePlayManager.Instance.transform.position,
+                        speed * Time.deltaTime);
             }
         }
     }

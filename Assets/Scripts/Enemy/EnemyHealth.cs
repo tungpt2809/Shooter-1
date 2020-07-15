@@ -1,4 +1,5 @@
-﻿using ObjectPooling;
+﻿using GamePlay;
+using ObjectPooling;
 using Observer;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Enemy
     public class EnemyHealth : MonoBehaviour
     {
         [SerializeField] private float health = 0;
+        [SerializeField] private int scoreReward = 0;
         [SerializeField] private GameObject healthBar = null;
 
         private PoolObjectType _type = PoolObjectType.None;
@@ -51,6 +53,7 @@ namespace Enemy
         {
             if (CurrentHeath < 1)
             {
+                GamePlayManager.Instance.AddScore(scoreReward);
                 PoolManager.Instance.CoolObject(gameObject, _type);
                 EventDispatcher.Instance.OnEnemyDeath.Invoke();
             }
