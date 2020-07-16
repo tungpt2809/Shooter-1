@@ -21,10 +21,10 @@ namespace Player
         private Camera _main;
         private float _currentHeath;
 
-        private float CurrentHeath
+        public float CurrentHeath
         {
             get => _currentHeath;
-            set
+            private set
             {
                 _currentHeath = value;
                 UpdateHeathBar();
@@ -126,6 +126,7 @@ namespace Player
 
         private void UpdateHeathBar()
         {
+            EventDispatcher.Instance.OnUpdateHeath.Invoke(CurrentHeath);
         }
 
         private void PlayerDeath()
