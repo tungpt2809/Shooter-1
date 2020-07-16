@@ -3,27 +3,49 @@ using UnityEngine.Events;
 namespace Observer
 {
     [System.Serializable]
-    public class OnPlayerShot : UnityEvent<Weapon.Weapon>
+    public class PlayerShotEvent : UnityEvent<Weapon.Weapon>
     {
     }
 
     [System.Serializable]
-    public class OnUpdateHeath : UnityEvent<float>
+    public class EnemyDeathEvent : UnityEvent<int>
+    {
+    }
+
+    [System.Serializable]
+    public class UpdateHeathEvent : UnityEvent<float>
+    {
+    }
+
+    [System.Serializable]
+    public class UpdateScoreEvent : UnityEvent<int, int>
+    {
+    }
+
+    [System.Serializable]
+    public class UpgradeLevelEvent : UnityEvent<int>
     {
     }
 
     public class EventDispatcher : GenericSingleton<EventDispatcher>
     {
-        public OnPlayerShot OnPlayerShot;
-        public UnityEvent OnEnemyDeath;
-        public UnityEvent OnEnemyHitPlayer;
-        public UnityEvent OnPlayerDeath;
-        public OnUpdateHeath OnUpdateHeath;
+        public PlayerShotEvent OnPlayerShot { get; private set; }
+        public EnemyDeathEvent OnEnemyDeath { get; private set; }
+        public UnityEvent OnEnemyHitPlayer { get; private set; }
+        public UnityEvent OnPlayerDeath { get; private set; }
+        public UpdateHeathEvent OnUpdateHeath { get; private set; }
+        public UpdateScoreEvent OnUpdateScore { get; private set; }
+        public UpgradeLevelEvent OnUpgradeLevel { get; private set; }
 
         public override void Awake()
         {
-            OnPlayerShot = new OnPlayerShot();
-            OnUpdateHeath = new OnUpdateHeath();
+            OnPlayerShot = new PlayerShotEvent();
+            OnEnemyDeath = new EnemyDeathEvent();
+            OnEnemyHitPlayer = new UnityEvent();
+            OnPlayerDeath = new UnityEvent();
+            OnUpdateHeath = new UpdateHeathEvent();
+            OnUpdateScore = new UpdateScoreEvent();
+            OnUpgradeLevel = new UpgradeLevelEvent();
         }
     }
 }

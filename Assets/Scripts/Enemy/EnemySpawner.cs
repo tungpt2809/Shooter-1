@@ -31,11 +31,13 @@ namespace Enemy
 
         private void SpawnAnEnemy()
         {
-            if (!GamePlayManager.Instance.spawn) return;
+            if (!GamePlayManager.Instance.Spawn) return;
             Vector2 spawnPos = GamePlayManager.Instance.player.transform.position;
             spawnPos += Random.insideUnitCircle.normalized * SpawnRadius;
 
-            var type = _enemies[Random.Range(0, _enemies.Count)];
+            var type = Random.value < 0.2 && GamePlayManager.Instance.LevelNumber >= 2
+                ? _enemies[2]
+                : _enemies[Random.Range(0, _enemies.Count - 1)];
             var ob = PoolManager.Instance.GetPoolObject(type);
 
             ob.transform.position = spawnPos;

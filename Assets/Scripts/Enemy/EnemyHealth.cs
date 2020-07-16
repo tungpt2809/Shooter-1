@@ -40,7 +40,7 @@ namespace Enemy
         {
             if (!other.CompareTag("PlayerBullet")) return;
             var bullet = other.GetComponent<Bullet.Bullet>();
-            CurrentHeath -= bullet.damage;
+            CurrentHeath -= bullet.Damage;
             bullet.CoolBullet();
         }
 
@@ -51,12 +51,9 @@ namespace Enemy
 
         private void CoolEnemy()
         {
-            if (CurrentHeath < 1)
-            {
-                GamePlayManager.Instance.AddScore(scoreReward);
-                PoolManager.Instance.CoolObject(gameObject, _type);
-                EventDispatcher.Instance.OnEnemyDeath.Invoke();
-            }
+            if (CurrentHeath > 0) return;
+            PoolManager.Instance.CoolObject(gameObject, _type);
+            EventDispatcher.Instance.OnEnemyDeath.Invoke(scoreReward);
         }
     }
 }

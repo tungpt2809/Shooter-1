@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using ObjectPooling;
+using Observer;
 using UnityEngine;
 
 namespace GamePlay
@@ -14,38 +15,64 @@ namespace GamePlay
     public class GamePlayManager : GenericSingleton<GamePlayManager>
     {
         [HideInInspector] public Player.Player player;
-        [HideInInspector] public bool spawn = true;
-        public Level[] levels;
+        [SerializeField] private Level[] levels = null;
+        public bool Spawn { get; private set; } = true;
 
         private int _score, _levelNumber;
 
-        private void Start()
+        private int Score
         {
-            _levelNumber = 0;
-        }
-
-        private void Update()
-        {
-            if (_score >= levels[_levelNumber].scoreMax)
+            get => _score;
+            set
             {
-                StartCoroutine(UpgradeThePlayer());
+                _score = value;
+                EventDispatcher.Instance.OnUpdateScore.Invoke(Score, levels[LevelNumber].scoreMax);
+                if (Score >= levels[LevelNumber].scoreMax && LevelNumber + 1 < levels.Length)
+                {
+                    EventDispatcher.Instance.OnUpgradeLevel.Invoke(LevelNumber + 1);
+                }
             }
         }
 
-        public void AddScore(int amount)
+        public int LevelNumber
         {
-            _score += amount;
+            get => _levelNumber;
+            private set
+            {
+                _levelNumber = value;
+                if (LevelNumber < levels.Length)
+                {
+                    EventDispatcher.Instance.OnUpdateScore.Invoke(Score, levels[LevelNumber].scoreMax);
+                }
+            }
+        }
+
+        private void Start()
+        {
+            LevelNumber = 0;
+            EventDispatcher.Instance.OnEnemyDeath.AddListener(AddScore);
+            EventDispatcher.Instance.OnUpgradeLevel.AddListener(Upgrade);
+        }
+
+        private void AddScore(int amount)
+        {
+            Score += amount;
+        }
+
+        private void Upgrade(int levelNumber)
+        {
+            StartCoroutine(UpgradeThePlayer());
         }
 
         private IEnumerator UpgradeThePlayer()
         {
-            _score = 0;
-            _levelNumber++;
-            player.ChangeWeapon(levels[_levelNumber].weapon);
+            Score = 0;
+            LevelNumber++;
+            player.ChangeWeapon(levels[LevelNumber].weapon);
             PoolManager.Instance.CoolAllPool();
-            spawn = false;
+            Spawn = false;
             yield return new WaitForSeconds(2f);
-            spawn = true;
+            Spawn = true;
         }
     }
 }

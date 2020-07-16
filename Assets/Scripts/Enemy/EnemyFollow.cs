@@ -13,7 +13,7 @@ namespace Enemy
             if (Vector2.Distance(transform.position, GamePlayManager.Instance.player.transform.position) > range)
             {
                 transform.position =
-                    Vector2.MoveTowards(transform.position, GamePlayManager.Instance.transform.position,
+                    Vector2.MoveTowards(transform.position, GamePlayManager.Instance.player.transform.position,
                         speed * Time.deltaTime);
             }
         }

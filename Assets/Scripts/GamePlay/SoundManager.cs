@@ -52,7 +52,7 @@ namespace GamePlay
                 : shootClips[shootClips.Length]);
         }
 
-        private void PlayEnemyDeath()
+        private void PlayEnemyDeath(int score)
         {
             PlaySoundFx(enemyDeathClip);
         }
