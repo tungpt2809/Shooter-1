@@ -8,6 +8,8 @@ namespace Bullet
     public class Bullet : MonoBehaviour
     {
         private PoolObjectType _type = PoolObjectType.None;
+        private Animator _animator;
+        private static readonly int Explosion = Animator.StringToHash("Explosion");
         public int Damage { get; private set; } = 0;
 
         public void InitBullet(PoolObjectType type, int iDamage, Transform firePoint, float force)
@@ -15,6 +17,7 @@ namespace Bullet
             _type = type;
             Damage = iDamage;
             GetComponent<Rigidbody2D>().AddForce(firePoint.up * -force, ForceMode2D.Impulse);
+            _animator = GetComponent<Animator>();
             Cooling();
         }
 
@@ -26,13 +29,24 @@ namespace Bullet
         private IEnumerator Cool()
         {
             yield return new WaitForSeconds(3f);
-
-            CoolBullet();
+            Hit();
         }
 
-        public void CoolBullet()
+        private void CoolBullet()
         {
             PoolManager.Instance.CoolObject(gameObject, _type);
+        }
+
+        public void Hit()
+        {
+            if (_animator)
+            {
+                _animator.SetTrigger(Explosion);
+            }
+            else
+            {
+                CoolBullet();
+            }
         }
     }
 }

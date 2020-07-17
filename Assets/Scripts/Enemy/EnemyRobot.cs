@@ -21,7 +21,7 @@ namespace Enemy
 
         private void Update()
         {
-            _isInRange = Vector2.Distance(transform.position, GamePlayManager.Instance.player.transform.position) <=
+            _isInRange = Vector2.Distance(transform.position, GamePlayManager.Instance.Player.transform.position) <=
                          2.5f;
             if (_nextShot) StartCoroutine(RobotShoot());
         }
@@ -33,7 +33,7 @@ namespace Enemy
 
         private void Rotation()
         {
-            var direction = (GamePlayManager.Instance.player.GetComponent<Rigidbody2D>().position - _rb.position)
+            var direction = (GamePlayManager.Instance.Player.GetComponent<Rigidbody2D>().position - _rb.position)
                 .normalized;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
             _rb.rotation = angle;

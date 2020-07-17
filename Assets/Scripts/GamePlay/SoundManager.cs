@@ -48,8 +48,8 @@ namespace GamePlay
         private void PlayShoot(Weapon.Weapon currentWeapon)
         {
             PlaySoundFx(currentWeapon.type <= PoolObjectType.WaveBullet
-                ? shootClips[Random.Range(0, shootClips.Length - 1)]
-                : shootClips[shootClips.Length]);
+                ? shootClips[Random.Range(0, shootClips.Length - 2)]
+                : shootClips[shootClips.Length - 1]);
         }
 
         private void PlayEnemyDeath(int score)

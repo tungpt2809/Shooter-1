@@ -39,6 +39,8 @@ namespace Observer
 
         public override void Awake()
         {
+            base.Awake();
+
             OnPlayerShot = new PlayerShotEvent();
             OnEnemyDeath = new EnemyDeathEvent();
             OnEnemyHitPlayer = new UnityEvent();

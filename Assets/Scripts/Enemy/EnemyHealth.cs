@@ -41,7 +41,7 @@ namespace Enemy
             if (!other.CompareTag("PlayerBullet")) return;
             var bullet = other.GetComponent<Bullet.Bullet>();
             CurrentHeath -= bullet.Damage;
-            bullet.CoolBullet();
+            bullet.Hit();
         }
 
         private void UpdateHeathBar()

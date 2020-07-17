@@ -14,11 +14,20 @@ namespace GamePlay
 
     public class GamePlayManager : GenericSingleton<GamePlayManager>
     {
-        [HideInInspector] public Player.Player player;
         [SerializeField] private Level[] levels = null;
         public bool Spawn { get; private set; } = true;
-
+        private Player.Player _player;
         private int _score, _levelNumber;
+
+        public Player.Player Player
+        {
+            get => _player;
+            set
+            {
+                _player = value;
+                ResetLevel();
+            }
+        }
 
         private int Score
         {
@@ -49,9 +58,15 @@ namespace GamePlay
 
         private void Start()
         {
-            LevelNumber = 0;
+            ResetLevel();
             EventDispatcher.Instance.OnEnemyDeath.AddListener(AddScore);
             EventDispatcher.Instance.OnUpgradeLevel.AddListener(Upgrade);
+        }
+
+        private void ResetLevel()
+        {
+            LevelNumber = 0;
+            Score = 0;
         }
 
         private void AddScore(int amount)
@@ -68,7 +83,7 @@ namespace GamePlay
         {
             Score = 0;
             LevelNumber++;
-            player.ChangeWeapon(levels[LevelNumber].weapon);
+            Player.ChangeWeapon(levels[LevelNumber].weapon);
             PoolManager.Instance.CoolAllPool();
             Spawn = false;
             yield return new WaitForSeconds(2f);

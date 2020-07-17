@@ -32,7 +32,7 @@ namespace Enemy
         private void SpawnAnEnemy()
         {
             if (!GamePlayManager.Instance.Spawn) return;
-            Vector2 spawnPos = GamePlayManager.Instance.player.transform.position;
+            Vector2 spawnPos = GamePlayManager.Instance.Player.transform.position;
             spawnPos += Random.insideUnitCircle.normalized * SpawnRadius;
 
             var type = Random.value < 0.2 && GamePlayManager.Instance.LevelNumber >= 2

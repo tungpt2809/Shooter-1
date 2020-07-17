@@ -18,6 +18,7 @@ namespace GamePlay
         private void Start()
         {
             EventDispatcher.Instance.OnUpgradeLevel.AddListener(RoundComplete);
+            EventDispatcher.Instance.OnPlayerDeath.AddListener(GameOver);
         }
 
         private void RoundComplete(int levelNumber)
@@ -30,6 +31,18 @@ namespace GamePlay
             txt.text = $"Round {levelNumber.ToString()} complete!";
             yield return new WaitForSeconds(2f);
             txt.text = $"";
+        }
+
+        private void GameOver()
+        {
+            StartCoroutine(PlayerDeath());
+        }
+
+        private IEnumerator PlayerDeath()
+        {
+            txt.text = "Game Over!";
+            yield return new WaitForSeconds(2f);
+            txt.text = "";
         }
     }
 }

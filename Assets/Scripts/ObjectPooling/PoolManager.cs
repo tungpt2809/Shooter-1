@@ -14,7 +14,8 @@ namespace ObjectPooling
         RobotBullet,
         EnemyZombie,
         EnemySkeleton,
-        EnemyRobot
+        EnemyRobot,
+        Grenade,
     }
 
     [System.Serializable]

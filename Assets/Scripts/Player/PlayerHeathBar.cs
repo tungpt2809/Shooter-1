@@ -13,7 +13,7 @@ namespace Player
 
         private void Start()
         {
-            maxHeath = GamePlayManager.Instance.player.CurrentHeath;
+            maxHeath = GamePlayManager.Instance.Player.CurrentHeath;
             for (var i = 0; i < maxHeath; i++)
             {
                 Instantiate(heathPoint, transform);

@@ -11,6 +11,7 @@ namespace Player
     public class Player : MonoBehaviour
     {
         [SerializeField] private Weapon.Weapon currentWeapon = null;
+        [SerializeField] private Weapon.Weapon grenade = null;
         [SerializeField] private SpriteRenderer currentWeaponSpr = null;
         [SerializeField] private Transform firePoint = null;
         private Rigidbody2D _myBody;
@@ -43,7 +44,7 @@ namespace Player
             _anim = GetComponent<Animator>();
             _main = Camera.main;
 
-            GamePlayManager.Instance.player = this;
+            GamePlayManager.Instance.Player = this;
             CurrentHeath = heath;
         }
 
@@ -62,6 +63,11 @@ namespace Player
             if (Input.GetMouseButtonDown(0))
             {
                 EventDispatcher.Instance.OnPlayerShot.Invoke(currentWeapon);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                EventDispatcher.Instance.OnPlayerShot.Invoke(grenade);
             }
 
             transform.position = new Vector2(Mathf.Clamp(transform.position.x, -5.32f, 5.32f),

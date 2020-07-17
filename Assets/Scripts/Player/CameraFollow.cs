@@ -8,7 +8,7 @@ namespace Player
     {
         private void Update()
         {
-            var playerPos = GamePlayManager.Instance.player.transform.position;
+            var playerPos = GamePlayManager.Instance.Player.transform.position;
             transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
         }
     }

@@ -10,10 +10,10 @@ namespace Enemy
 
         private void Update()
         {
-            if (Vector2.Distance(transform.position, GamePlayManager.Instance.player.transform.position) > range)
+            if (Vector2.Distance(transform.position, GamePlayManager.Instance.Player.transform.position) > range)
             {
                 transform.position =
-                    Vector2.MoveTowards(transform.position, GamePlayManager.Instance.player.transform.position,
+                    Vector2.MoveTowards(transform.position, GamePlayManager.Instance.Player.transform.position,
                         speed * Time.deltaTime);
             }
         }
