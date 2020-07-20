@@ -39,9 +39,9 @@ namespace Enemy
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("PlayerBullet")) return;
-            var bullet = other.GetComponent<Bullet.Bullet>();
-            CurrentHeath -= bullet.Damage;
-            bullet.Hit();
+            var subBullet = other.GetComponent<Bullet.SubBullet>();
+            CurrentHeath -= subBullet.Damage;
+            subBullet.Hit();
         }
 
         private void UpdateHeathBar()

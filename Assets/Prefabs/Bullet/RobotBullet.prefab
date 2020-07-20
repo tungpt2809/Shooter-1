@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8881024316594355601}
   - component: {fileID: 8881024316594355606}
   - component: {fileID: 8328837723658128479}
+  - component: {fileID: 8167174124698880996}
   m_Layer: 0
   m_Name: RobotBullet
   m_TagString: EnemyBullet
@@ -133,4 +134,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4a7005f25c42b40863abffe9d9e447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  subBullets:
+  - {fileID: 8167174124698880996}
+--- !u!114 &8167174124698880996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8881024316594355607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166c8fa779cea2246b9de40fc8e389f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

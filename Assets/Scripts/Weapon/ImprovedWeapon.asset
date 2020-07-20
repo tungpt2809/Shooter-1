@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5ae8ce5a20b18f4cb2b90aa07ebbe79, type: 3}
   m_Name: ImprovedWeapon
   m_EditorClassIdentifier: 
-  currentWeaponSpr: {fileID: 0}
-  type: 0
+  currentWeaponSpr: {fileID: 21300000, guid: a5882af3c5c57b8429b6a50a60c169a5, type: 3}
+  type: 2
   fireRate: 1
   force: 1
   damage: 20
