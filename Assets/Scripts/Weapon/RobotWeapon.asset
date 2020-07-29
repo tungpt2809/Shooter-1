@@ -15,5 +15,5 @@ MonoBehaviour:
   currentWeaponSpr: {fileID: 0}
   type: 5
   fireRate: 2
-  force: 1
+  force: 2
   damage: 1

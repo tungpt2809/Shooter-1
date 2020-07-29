@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeaponSpr: {fileID: 21300000, guid: a5882af3c5c57b8429b6a50a60c169a5, type: 3}
   type: 2
-  fireRate: 1
-  force: 1
-  damage: 20
+  fireRate: 3
+  force: 2
+  damage: 30

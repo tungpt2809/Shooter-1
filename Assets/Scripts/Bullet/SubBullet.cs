@@ -18,7 +18,8 @@ namespace Bullet
         public void Hit()
         {
             IsHit = true;
-            gameObject.SetActive(false);
+            if (!_bullet.GetComponent<Animator>())
+                gameObject.SetActive(false);
             _bullet.Hit(false);
         }
 

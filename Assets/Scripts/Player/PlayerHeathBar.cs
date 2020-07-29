@@ -19,13 +19,12 @@ namespace Player
                 Instantiate(heathPoint, transform);
             }
 
-            GetComponent<HorizontalLayoutGroup>().childControlWidth = false;
-
             EventDispatcher.Instance.OnUpdateHeath.AddListener(UpdateHeathBar);
         }
 
         private void UpdateHeathBar(float heath)
         {
+            GetComponent<HorizontalLayoutGroup>().childControlWidth = false;
             for (var i = (int) heath; i < maxHeath; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(false);
